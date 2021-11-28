@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,6 +19,11 @@
   },
   "homepage": "https://github.com/omeruysal/Node.js-EJS#readme",
   "devDependencies": {
+    "nodemon": "^2.0.15",
     "prettier": "2.5.0"
+  },
+  "dependencies": {
+    "ejs": "^3.1.6",
+    "express": "^4.17.1"
   }
 }
