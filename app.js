@@ -1,13 +1,17 @@
 const express = require("express");
-const path = require("path");
-const ejs = require("ejs");
 const app = express();
-require("dotenv").config();
 const mongoose = require("mongoose");
+
+require("dotenv").config();
+
+const photoController = require("./controller/photoController");
+const pageController = require("./controller/pageController");
 
 app.set("view engine", "ejs");
 
 app.use(express.static("public"));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 mongoose
   .connect(process.env.CONNECTION_STRING, {
@@ -22,17 +26,15 @@ mongoose
     console.log(err);
   });
 
-app.get("/", (req, res) => {
-  res.render("index");
-});
+app.get("/", photoController.getAllPhotos);
+app.get("/photos/:id", photoController.getPhoto);
+app.post("/photos", photoController.createPhoto);
+app.put("/photos/:id", photoController.updatePhoto);
+app.delete("/photos/:id", photoController.deletePhoto);
 
-app.get("/add", (req, res) => {
-  res.render("add");
-});
-
-app.get("/about", (req, res) => {
-  res.render("about");
-});
+app.get("/about", pageController.getAboutPage);
+app.get("/add", pageController.getAddPage);
+app.get("/photos/edit/:id", pageController.getEditPage);
 
 const port = 3000;
 app.listen(port, () => {
